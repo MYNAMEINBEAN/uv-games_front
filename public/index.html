@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
+    <title>Acid Loading Screen</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -250,7 +250,8 @@
 
             // Get the current URL and construct the iframe source
             const currentUrl = window.location.href.split('#')[0]; // Remove hash if present
-            const constructedIframeSrc = `${currentUrl}/a/
+            const constructedIframeSrc = `https://acid-mauve.vercel.app/a/#home`;
+            // const constructedIframeSrc = `${currentUrl}/a/`;
             mainIframe.src = constructedIframeSrc;
 
             // Set a timeout for the minimum 5-second loading duration
