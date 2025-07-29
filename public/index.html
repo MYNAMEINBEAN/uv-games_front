@@ -1,86 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultraviolet Proxy Game Launcher</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #181818; color: #fff; }
-    .game-list { display: flex; flex-wrap: wrap; gap: 20px; }
-    .game-card { background: #222; border-radius: 8px; padding: 16px; width: 260px; box-shadow: 0 2px 8px #0006; }
-    .game-card img { width: 100%; border-radius: 6px; }
-    .game-title { font-size: 1.2em; margin: 10px 0 6px; }
-    .game-desc { font-size: 0.95em; margin-bottom: 10px; }
-    .play-btn { background: #4caf50; color: #fff; border: none; padding: 10px 18px; border-radius: 5px; cursor: pointer; font-size: 1em; }
-    .play-btn:hover { background: #388e3c; }
-  </style>
-</head>
-<body>
-  <h1>Play Games via Ultraviolet Proxy</h1>
-  <div class="game-list" id="gameList"></div>
-
-  <script>
-    // Dynamically load games from qweqwe.txt
-    async function getGames() {
-      const res = await fetch('https://raw.githubusercontent.com/MYNAMEINBEAN/games/refs/heads/main/qweqwe.txt');
-      const text = await res.text();
-      // Remove BOM and parse JSON
-      const json = text.trim().replace(/^\uFEFF/, '');
-      let games;
-      try {
-        games = JSON.parse(json);
-      } catch (e) {
-        // Try to fix trailing commas or other issues
-        games = JSON.parse(json.replace(/,\s*([}\]])/g, '$1'));
-      }
-      return games;
-    }
-
-    function encodeUrl(url) {
-      return btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    }
-
-    function playGame(gameUrl) {
-      const encodedUrl = encodeUrl(gameUrl);
-      window.open(`/uv/service/${encodedUrl}`, '_blank');
-    }
-
-    function renderGames(games) {
-      const container = document.getElementById('gameList');
-      container.innerHTML = '';
-      games.forEach(game => {
-        // Use thumb8 or thumb3 for image, fallback to a placeholder
-        const imgSrc = game.thumb8 || game.thumb3 || '';
-        const title = game.name || game.title || 'Untitled';
-        const desc = game.description || '';
-        const url = game.url || game.embed || '';
-        const card = document.createElement('div');
-        card.className = 'game-card';
-        card.innerHTML = `
-          <img src="${imgSrc}" alt="${title}">
-          <div class="game-title">${title}</div>
-          <div class="game-desc">${desc}</div>
-          <button class="play-btn" onclick="playGame('${url}')">Play</button>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    async function main() {
-      try {
-        const games = await getGames();
-        if (!games || !Array.isArray(games) || games.length === 0) {
-          document.getElementById('gameList').innerHTML = '<div style="color:#fff;font-size:1.2em;">No games found.</div>';
-        } else {
-          renderGames(games);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the loading spinner */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
-      } catch (err) {
-        document.getElementById('gameList').innerHTML = '<div style="color:#fff;font-size:1.2em;">Failed to load games.<br>If you are running this locally, you may need to use a local server due to browser security (CORS) restrictions.</div>';
-        console.error('Error loading games:', err);
-      }
-    }
+        .animate-spin-custom {
+            animation: spin 1.5s linear infinite; /* Slightly slower spin */
+        }
+        .animate-spin-reverse {
+            animation: spin 2s linear infinite reverse; /* Second spinner, reverse direction */
+        }
+        .animate-spin-fast {
+            animation: spin 1.2s linear infinite; /* Third spinner, faster spin */
+        }
 
-    main();
-  </script>
+        /* Glitch effect for text */
+        @keyframes glitch-text {
+            0% {
+                text-shadow: 0.05em 0 0 #00f, -0.05em -0.025em 0 #f00, -0.025em 0.05em 0 #0f0;
+                transform: translate(0.025em, 0.025em);
+            }
+            14% {
+                text-shadow: -0.05em -0.025em 0 #00f, 0.025em 0.025em 0 #f00, 0.05em -0.05em 0 #0f0;
+                transform: translate(-0.025em, -0.025em);
+            }
+            15% {
+                text-shadow: 0.05em 0 0 #00f, -0.05em -0.025em 0 #f00, -0.025em 0.05em 0 #0f0;
+                transform: translate(0.025em, 0.025em);
+            }
+            29% {
+                text-shadow: -0.05em -0.025em 0 #00f, 0.025em 0.025em 0 #f00, 0.05em -0.05em 0 #0f0;
+                transform: translate(-0.025em, -0.025em);
+            }
+            30% {
+                text-shadow: 0.05em 0 0 #00f, -0.05em -0.025em 0 #f00, -0.025em 0.05em 0 #0f0;
+                transform: translate(0.025em, 0.025em);
+            }
+            44% {
+                text-shadow: -0.05em -0.025em 0 #00f, 0.025em 0.025em 0 #f00, 0.05em -0.05em 0 #0f0;
+                transform: translate(-0.025em, -0.025em);
+            }
+            45% {
+                text-shadow: 0.05em 0 0 #00f, -0.05em -0.025em 0 #f00, -0.025em 0.05em 0 #0f0;
+                transform: translate(0.025em, 0.025em);
+            }
+            59% {
+                text-shadow: -0.05em -0.025em 0 #00f, 0.025em 0.025em 0 #f00, 0.05em -0.05em 0 #0f0;
+                transform: translate(-0.025em, -0.025em);
+            }
+            60% {
+                text-shadow: 0.05em 0 0 #00f, -0.05em -0.025em 0 #f00, -0.025em 0.05em 0 #0f0;
+                transform: translate(0.025em, 0.025em);
+            }
+            74% {
+                text-shadow: -0.05em -0.025em 0 #00f, 0.025em 0.025em 0 #f00, 0.05em -0.05em 0 #0f0;
+                transform: translate(-0.025em, -0.025em);
+            }
+            75% {
+                text-shadow: 0.05em 0 0 #00f, -0.05em -0.025em 0 #f00, -0.025em 0.05em 0 #0f0;
+                transform: translate(0.025em, 0.025em);
+            }
+            89% {
+                text-shadow: -0.05em -0.025em 0 #00f, 0.025em 0.025em 0 #f00, 0.05em -0.05em 0 #0f0;
+                transform: translate(-0.025em, -0.025em);
+            }
+            90% {
+                text-shadow: 0.05em 0 0 #00f, -0.05em -0.025em 0 #f00, -0.025em 0.05em 0 #0f0;
+                transform: translate(0.025em, 0.025em);
+            }
+            100% {
+                text-shadow: none;
+                transform: translate(0, 0);
+            }
+        }
+        .glitch-effect-text {
+            animation: glitch-text 1.5s infinite linear alternate-reverse;
+        }
+
+        /* Glitch effect for spinner (subtle blur flicker) */
+        @keyframes glitch-spinner-blur {
+            0%, 100% { filter: blur(0px); }
+            5% { filter: blur(1px); }
+            10% { filter: blur(0px); }
+            15% { filter: blur(1px); }
+            20% { filter: blur(0px); }
+        }
+        .glitch-effect-spinner {
+            animation: glitch-spinner-blur 1s infinite steps(1); /* Fast, jerky blur */
+        }
+
+        /* Neon glow effect for text */
+        .neon-glow-text {
+            text-shadow:
+                0 0 7px #00f,
+                0 0 10px #00f,
+                0 0 21px #00f,
+                0 0 42px #00f,
+                0 0 82px #00f,
+                0 0 92px #00f,
+                0 0 102px #00f,
+                0 0 151px #00f;
+        }
+
+        /* Ensure body and html take full height for proper layout */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Hide scrollbars during loading */
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #1a202c; /* Dark background for particles */
+            background-image: url('');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 50%;
+            z-index: 0; /* Ensure particles are in the background */
+        }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Completely transparent background to show particles fully */
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10; /* Above particles, below iframe when shown */
+            transition: opacity 0.5s ease-out; /* Smooth fade out */
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 500px; /* Fixed width */
+            height: 500px; /* Fixed height */
+            margin-bottom: 2rem; /* mb-8 */
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); /* Subtle cyan glow */
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden;
+        }
+
+        /* Increased size for the main loading indicator */
+        .loading-indicator-container {
+            position: relative;
+            width: 250px; /* Increased size */
+            height: 250px; /* Increased size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Adjusted spinner border width for larger size */
+        .loading-indicator-container .border-4 {
+            border-width: 8px; /* Thicker border for larger spinner */
+        }
+
+        #iframe-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1; /* Below loading overlay initially */
+            display: none; /* Hidden by default until loaded */
+        }
+
+        #main-iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- Particle background container -->
+    <div id="particles-js"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <!-- Logo container -->
+        <div class="logo-container">
+            <img id="acid-logo" src="https://i.ibb.co/BKts6qNp/Gemini-Generated-Image-3rng163rng163rng-removebg-preview.png" alt="Acid Logo" class="w-full h-full object-contain rounded-md" onerror="this.onerror=null;this.src='https://placehold.co/500x500/000000/FFFFFF?text=Acid+Logo';" />
+        </div>
+
+        <!-- Main loading indicator container - now bigger -->
+        <div class="loading-indicator-container">
+            <!-- Main loading spinner with glitch effect -->
+            <div class="absolute inset-0 border-t-4 border-blue-500 border-opacity-75 rounded-full animate-spin-custom glitch-effect-spinner"></div>
+            <!-- Second loading spinner layer with glitch effect -->
+            <div class="absolute inset-0 border-b-4 border-l-4 border-purple-400 border-opacity-75 rounded-full animate-spin-reverse glitch-effect-spinner" style="transform: scale(0.8);"></div>
+            <!-- Third loading spinner layer (new) -->
+            <div class="absolute inset-0 border-r-4 border-t-4 border-green-400 border-opacity-75 rounded-full animate-spin-fast glitch-effect-spinner" style="transform: scale(0.6);"></div>
+
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-white text-4xl font-extrabold glitch-effect-text neon-glow-text">LOADING...</span>
+            </div>
+        </div>
+        <p class="mt-8 text-white text-center text-xl glitch-effect-text neon-glow-text">
+            PREPARING CONTENT FOR <span class="font-extrabold text-blue-300">ACID</span>. PLEASE WAIT.
+        </p>
+    </div>
+
+    <!-- Iframe Container -->
+    <div id="iframe-container">
+        <iframe
+            id="main-iframe"
+            title="Embedded Content"
+            allowFullScreen
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+        >
+            Your browser does not support iframes.
+        </iframe>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const iframeContainer = document.getElementById('iframe-container');
+            const mainIframe = document.getElementById('main-iframe');
+
+            // Dynamically add the particles script
+            const particlesScript = document.createElement('script');
+            particlesScript.src = "https://cdn.jsdelivr.net/gh/mynameinbean/particles@8997e4eafae447d6537f85249fdb55229009ff26/script.js";
+            particlesScript.async = true;
+            document.body.appendChild(particlesScript);
+
+            // Get the current URL and construct the iframe source
+            const currentUrl = window.location.href.split('#')[0]; // Remove hash if present
+            const constructedIframeSrc = `${currentUrl}/a/
+            mainIframe.src = constructedIframeSrc;
+
+            // Set a timeout for the minimum 5-second loading duration
+            setTimeout(() => {
+                // Fade out the loading overlay
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none'; // Hide after fade out
+                    iframeContainer.style.display = 'block'; // Show the iframe container
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling if needed
+                }, 500); // Match transition duration
+            }, 5000); // 5000 milliseconds = 5 seconds
+
+            // The iframe will load in the background. Its 'load' event is no longer
+            // directly tied to hiding the loading overlay, as the 5-second timer
+            // is now the primary control for the overlay's visibility duration.
+            // You can keep the 'error' listener for debugging purposes if needed.
+            mainIframe.addEventListener('error', () => {
+                console.error('Error loading iframe content.');
+                // Even on error, the loading overlay will still disappear after 5 seconds.
+            });
+        });
+    </script>
 </body>
 </html>
