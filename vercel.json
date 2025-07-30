@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/1",
+      "destination": "/123123d/ifjeiwncjfnds/index.html"
+    },
+    {
+      "source": "/2",
+      "destination": "/oidsuhfgdshbf/824yhrfq/index.html"
+    }
+  ]
+}
