@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/1",
-      "destination": "/123123d/ifjeiwncjfnds/index.html"
+      "destination": "/public/123123d/ifjeiwncjfnds/index.html"
     },
     {
       "source": "/2",
-      "destination": "/oidsuhfgdshbf/824yhrfq/index.html"
+      "destination": "/public/oidsuhfgdshbf/824yhrfq/index.html"
     }
   ]
 }
